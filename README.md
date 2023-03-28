@@ -10,9 +10,9 @@
 Build and publish
 
 ```shell
-docker build . -t bardolf/doorbell:0.9.2
-docker tag bardolf/doorbell:0.9.2 bardolf/doorbell:0.9.2
-docker push  bardolf/doorbell:0.9.2
+docker build . -t bardolf/doorbell:0.9.5
+docker tag bardolf/doorbell:0.9.5 bardolf/doorbell:0.9.5
+docker push  bardolf/doorbell:0.9.5
 ```
 
 ### ESP32
@@ -25,7 +25,7 @@ docker push  bardolf/doorbell:0.9.2
 We run the app as a docker 
 
 ```shell
-docker run -d -p 3000:3000 -p 3010:3010 --name doorbell bardolf/doorbell:0.9.2
+docker run -d -p 3000:3000 -p 3010:3010 --name doorbell bardolf/doorbell:0.9.5
 ```
 
 Nginx setup could look like 

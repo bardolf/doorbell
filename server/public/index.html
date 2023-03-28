@@ -4,14 +4,10 @@
 <head>
     <title>Notification Example</title>
     <script>
-        const socket = new WebSocket('wss://doorbell.skybit.cz/ws');
+        var mySocket;
 
-        socket.addEventListener('open', (event) => {
-            console.log('WebSocket connection established');
-        });
-
-        // Handle WebSocket message
-        socket.addEventListener('message', (event) => {
+        const socketMessageListener = (event) => {
+            console.log(event.data);
             if (event.data === 'notification') {
                 const options = {
                     body: 'Doorbell',
@@ -34,7 +30,25 @@
                     });
                 }
             }
-        });
+        };
+
+        const socketOpenListener = (event) => {
+            console.log('Connected');
+            mySocket.send('hello');
+        };
+
+        const socketCloseListener = (event) => {
+            if (mySocket) {
+                console.error('Disconnected.');
+            }
+            mySocket = new WebSocket('wss://doorbell.skybit.cz/ws');
+            mySocket.addEventListener('open', socketOpenListener);
+            mySocket.addEventListener('message', socketMessageListener);
+            mySocket.addEventListener('close', socketCloseListener);
+        };
+
+        socketCloseListener();
+
     </script>
 </head>
 

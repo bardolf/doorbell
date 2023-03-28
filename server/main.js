@@ -24,6 +24,7 @@ wss.on('connection', (ws) => {
 
 
 app.get('/send-notification', (req, res) => {
+    console.log('Sending notification message');
     wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
             client.send('notification');
