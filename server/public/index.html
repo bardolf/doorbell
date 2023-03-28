@@ -4,7 +4,7 @@
 <head>
     <title>Notification Example</title>
     <script>
-        const socket = new WebSocket('wss://doorbell.skybit.cz');
+        const socket = new WebSocket('wss://doorbell.skybit.cz/ws');
 
         socket.addEventListener('open', (event) => {
             console.log('WebSocket connection established');
@@ -22,14 +22,14 @@
                     const notification = new Notification('Doorbell', options);
                     setTimeout(() => {
                         notification.close();
-                    }, 1000);
+                    }, 2000);
                 } else if (Notification.permission !== 'denied') {
                     Notification.requestPermission().then(permission => {
                         if (permission === 'granted') {
                             const notification = new Notification('Doorbell', options);
                             setTimeout(() => {
                                 notification.close();
-                            }, 1000);
+                            }, 2000);
                         }
                     });
                 }

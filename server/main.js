@@ -11,7 +11,7 @@ const HOST = '0.0.0.0';
 app.use(express.static('public'));
 
 const server = http.createServer(app);
-const wss = new WebSocket.Server({port: 3010 });
+const wss = new WebSocket.Server({port: 3010});
 
 // Handle WebSocket connection
 wss.on('connection', (ws) => {
