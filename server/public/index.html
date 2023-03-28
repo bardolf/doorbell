@@ -2,58 +2,53 @@
 <html>
 
 <head>
-  <title>Notification Example</title>
-  <script>
-    // Create WebSocket connection
-    const socket = new WebSocket('ws://localhost:3000');
+    <title>Notification Example</title>
+    <script>
+        const socket = new WebSocket('wss://doorbell.skybit.cz');
 
-    // Handle WebSocket connection
-    socket.addEventListener('open', (event) => {
-      console.log('WebSocket connection established');
-    });
+        socket.addEventListener('open', (event) => {
+            console.log('WebSocket connection established');
+        });
 
-    // Handle WebSocket message
-    socket.addEventListener('message', (event) => {
-      if (event.data === 'notification') {
-        // Send notification to browser
-        const options = {
-          body: 'Doorbell',
-          icon: 'http://localhost:3000/warning.png',
-        };
+        // Handle WebSocket message
+        socket.addEventListener('message', (event) => {
+            if (event.data === 'notification') {
+                const options = {
+                    body: 'Doorbell',
+                    icon: 'https://doorbell.skybit.cz/warning.png',
+                };
 
-        if (Notification.permission === 'granted') {
-          const notification = new Notification('Doorbell', options);
-          setTimeout(() => {
-            notification.close();
-          }, 1000);
-        } else if (Notification.permission !== 'denied') {
-          Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-              const notification = new Notification('Doorbell', options);
-              setTimeout(() => {
-                notification.close();
-              }, 1000);
+                if (Notification.permission === 'granted') {
+                    const notification = new Notification('Doorbell', options);
+                    setTimeout(() => {
+                        notification.close();
+                    }, 1000);
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            const notification = new Notification('Doorbell', options);
+                            setTimeout(() => {
+                                notification.close();
+                            }, 1000);
+                        }
+                    });
+                }
             }
-          });
-        }
-      }
-    });
-  </script>
+        });
+    </script>
 </head>
 
 <body>
-  <h1>Notification Example</h1>
-  <p>Click the button to send a notification:</p>
-  <button onclick="sendNotification()">Send Notification</button>
-  <script>
+<h1>Doorbell Notification</h1>
+<button onclick="sendNotification()">Send test notification</button>
+<script>
     function sendNotification() {
-      // Call endpoint to send notification
-      fetch('/send-notification')
-        .then(response => response.text())
-        .then(message => console.log(message))
-        .catch(error => console.error(error));
+        fetch('/send-notification')
+            .then(response => response.text())
+            .then(message => console.log(message))
+            .catch(error => console.error(error));
     }
-  </script>
+</script>
 </body>
 
 </html>
